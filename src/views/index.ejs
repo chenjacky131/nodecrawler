@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h3>nodejs爬虫 获取海兔信息</h3>
+    <p>...初始化完成</p>
+    <p><button class="btn" id="btn0" onclick="cheerFetch(1)">点击开始抓取第一页</button></p>
+    <div class="container">
+
+    </div>
+    <div class="footer">
+        <p class="fetching">数据抓取中...请稍后</p>
+        <button class="btn" id="btn1" onclick="cheerFetch(--currentPage)">抓取上一页</button>
+        <button class="btn" id="btn2" onclick="cheerFetch(++currentPage)">抓取下一页</button>
+    </div>
+    <script src="/static/js/jquery.min.js"></script>
+    <script>
+        $('#btn1,#btn2').hide();
+        var currentPage = 1;// page初始为1
+        function cheerFetch(_page){// 抓取数据处理函数
+            $(document).ajaxSend(function(event,xhr,settings){ // 抓取中...
+                $('.fetching').show();
+            });
+            $(document).ajaxSuccess(function(event,xhr,settings){// 抓取成功
+                $('.fetching').hide();
+            });
+            $.ajax({ // 开始发送ajax请求至路径/getPicture 进而作页面抓取处理
+                data:{page:_page},
+                dataType:"json",
+                type:"get",
+                url:"/getPicture",
+                success:function(data){
+                    var html = "";
+                    $(".container").empty();
+                    if(data.nudibranchs.length==0){
+                        alert("Error2: 未找到数据..");
+                        return;
+                    }
+                    for(var i=0;i<data.nudibranchs.length;i++){
+                        var nudibranch = data.nudibranchs[i];
+                        html += "<div class='list-item'><p class='index'><span>序号：</span>"+(i+1)+"</p>"+
+                            "<p class='img'><img src='"+nudibranch.imgUrl+"'/></p>"+
+                            "<p class='name'><span>中文名：</span>"+nudibranch.cnName+"</p>"+
+                            "<p class='name'><span>英文名：</span>"+nudibranch.enName+"</p>"+
+                        "</div>";
+                    }
+                    $(".container").append(html);// 展示页面
+                    if(_page==1){
+                        $("#btn1").hide();
+                        $('#btn2').show();
+                    }else if(_page>1){
+                        $("#btn1").show();
+                        $('#btn2').show();
+                    }
+                },
+                error:function(){
+                    alert("Error1: 未找到数据..");
+                }
+            })
+        }
+    </script>
+</body>
+</html>

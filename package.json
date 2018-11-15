@@ -1,0 +1,19 @@
+{
+  "name": "practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pachong.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "hotnode ./src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}

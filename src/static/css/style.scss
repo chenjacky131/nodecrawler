@@ -1,0 +1,28 @@
+body{
+    font-size: 12px;
+    line-height: 1.2;
+    font-family: '微软雅黑';
+}
+.container{
+  overflow: hidden;
+  border: 1px solid #ccc;
+  padding: 10px;
+  .list-item{
+    float: left;
+    width: 33.33%;   
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    p{margin: 0;} 
+    .img{
+      img{width: 200px;height:190px;vertical-align: middle;}
+    }
+  }
+}
+.footer{
+    .fetching{
+        display: none;
+    }
+}
